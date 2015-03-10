@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ImageAcquisitionInfo [
+<!--
+
+This XML file is used to store static information for a particular
+vendor's image acquistion devices.
+
+-->
+
+<!-- The ImageAcquisitionInfo node is the root node of the file.  It
+     contains zero or one Help nodes and zero or more Device nodes. -->
+<!ELEMENT ImageAcquisitionInfo (Help?, Property*, Include*, Source*, TriggerInfo?, Device*)>
+
+<!-- The Help node, if present, must contain one or more AdaptorHelp nodes. -->
+<!ELEMENT Help (AdaptorHelp+)>
+
+<!-- AdaptorHelp nodes have some amount of text, followed by zero or more
+     DeviceHelp nodes followed by zero or one SeeAlso lines.  The text will
+     be formated in MATLAB exactly as it is entered in this file so no extra
+     spacing or indentation should be used.  Because the node is of mixed
+     type, it is not possible to specify the exact order or number of any of
+     these elements within the DTD, so care should be taken when adding
+     them. -->
+<!ELEMENT AdaptorHelp (#PCDATA | DeviceHelp | SeeAlso)*>
+
+<!-- The AdaptorHelp node contains one attribute, the name of the property
+     to which the help applies. -->
+<!ATTLIST AdaptorHelp property CDATA #REQUIRED>
+
+<!-- The AdaptorHelp node contains the DeviceHelp node which adds extra help
+     for a specific piece of hardware. -->
+<!ELEMENT DeviceHelp (#PCDATA)>
+
+<!-- The device attribute of the DeviceHelp node contains the name of the
+     board that the help is for.  This should be the same as the name
+     attribute of the Device node for the hardware. -->
+<!ATTLIST DeviceHelp device CDATA #REQUIRED>
+
+<!-- The SeeAlso node of the AdaptorHelp node specifies the "see also" line
+     that should appear in MATLAB. -->
+<!ELEMENT SeeAlso (#PCDATA)>
+
+<!-- Device nodes can have zero or more Section nodes followed by zero or
+     more VideoFormat, Include, Section, or Property nodes and zero or one
+     TriggerInfo nodes. -->
+<!ELEMENT Device (VideoFormat*, Include*, Section*, Property*, TriggerInfo?)>
+
+<!-- Device nodes have exactly one property "name", which is the name of the
+device as known by the cooresponding adaptor.  This name usually is the name
+of the device from the SDK.  -->
+<!ATTLIST Device name CDATA #REQUIRED>
+
+<!-- The VideoFormat element can define properties and trigger information that
+     is specific to a known video format.  It is legal for the VideoFormat
+     element to also contain Include and Section elements. -->
+<!ELEMENT VideoFormat (Include*, Section*, Property*, TriggerInfo?)>
+
+<!-- VideoFormat nodes have exactly one property "name", which is the video
+     format supported by the device.  This video format usually is the name of
+     the video format as used by the adaptor. -->
+<!ATTLIST VideoFormat name CDATA #REQUIRED>
+
+<!-- Section nodes can have zero or more Include nodes.  The Include nodes
+     can be followed by zero or more Property nodes or zero or one TriggerInfo
+     nodes.  It is not possible to mix Property nodes and TriggerInfo nodes in
+     the same Section.  The Property and TriggerInfo nodes follow the same
+     rules as the nodes directly under a device node. The name attribute is
+     required and is used by the Include nodes to locate a particular 
+     section. -->
+<!ELEMENT Section (Include*, (Property* | TriggerInfo?))> 
+<!ATTLIST Section name CDATA #REQUIRED>
+
+<!-- The optional Include element can be used to simplify the XML file.  By
+including -->
+<!ELEMENT Include EMPTY>
+
+<!-- The value of the tag property should be the name of a Section node. -->
+<!ATTLIST Include tag CDATA #REQUIRED>
+
+<!-- The Property node describes the properties for a specific peice of
+     hardware.  Property nodes can have zero or more EnumConstraintValue
+     nodes.  The EnumConstraintValue nodes are only valid if the constraint
+     attribute is equal to "enum". -->
+<!ELEMENT Property (EnumConstraintValue*)>
+
+<!-- The attributes of the Property node.  The attributes are:
+       constraint     - Constraints on property values.  Defines the what kind of
+                        property will be created.  Valid values are:
+
+                        bounded           - A bounded property.  Requires the 
+			                    min and max attributes to be set.
+	                enum              - A list of enumerations. Requires
+                                            a type value of String.
+	                none              - No constraints, property can hold 
+	                                    any valid MATLAB variable.
+	                zeroorpositive    - Value which must be greater than 
+	                                    zero.
+	                zeroinforpositive - Value which must be greater than 
+	                                    zero or infinite.
+                        positive          - Value which must be positive.
+	                inforpositive     - Value must be positive or infinite.
+       deviceSpecific - Indicates whether or not the property is vendor
+                        specific.  Valid values are:
+                          true  - The property is vendor specific.
+                          false - The property is not vendor specific.
+       name           - The property name as it should be listed
+       readOnly       - The read-only status of the property.  Valid values 
+                        are:
+                          always         - The property is always read-only.
+                          never          - The property is never read-only.
+                          whileRunning   - The property is read-only when the 
+                                           device's Running property is "on".
+       type           - The data type of the property.  Valid values are:
+                          double - Value is a double value.  Requires a 
+                                   constraint value of none, zeroorpositive, 
+                                   zeroinforpositive, or bounded.
+                          int    - Value is an integer value.  Requires a 
+                                   constraint value of none, zeroorpositive, 
+                                   zeroinforpositive, positive, inforpositive,
+                                   or bounded.
+                          string - Value is a string.  Requires a constraint 
+                                   value of none or enum.
+       min            - The minimum allowable value of the property.
+       max            - The maximum allowable value of the property.
+       optional       - If set to "on", the property will not be created and 
+                        added to the object by default.  Instead, the adaptor 
+                        must explicity create the object.  If not present or 
+                        set to "off" the property will automatically be created
+                        and added to the object.
+       default        - The default value of the property.
+
+     The constraint, deviceSpecific, name, readOnly, and type attributes are 
+     required.  The min, max, optional, and default attributes are optional. 
+-->
+<!ATTLIST Property constraint (bounded | enum | none | zeroorpositive | zeroinforpositive | positive | inforpositive)  #REQUIRED
+		   deviceSpecific (true | false)                  #REQUIRED
+		   name           CDATA                           #REQUIRED
+		   readOnly       (always | never | whileRunning) #REQUIRED
+		   type           (double | int | string)         #REQUIRED
+		   min            CDATA                           #IMPLIED
+		   max            CDATA                           #IMPLIED
+		   optional       (on | off)                      #IMPLIED
+		   default        CDATA                           #IMPLIED>
+
+<!-- The EnumConstraintValue does not have any sub-nodes.  Both the id and
+     name attributes are required. The name of the constraint is the name
+     that will be displayed within MATLAB.  The id can be set to any unique
+     identifier.  It is typically set to some value that is recognized by
+     the vendor's SDK.--> 
+<!ELEMENT EnumConstraintValue EMPTY>
+<!ATTLIST EnumConstraintValue id   CDATA #REQUIRED
+                              name CDATA #REQUIRED>
+
+<!-- The Source element defines a source to be added to the object.  The
+     name is the name of the sources and will the value that appears in the
+     source's "Name" property.  The id can be any unique identifier.  It
+     is typically set to some value that is recognized by the vendor's SDK.
+-->
+<!ELEMENT Source EMPTY>
+<!ATTLIST Source id   CDATA #REQUIRED
+                 name CDATA #REQUIRED>
+
+<!-- The TriggerInfo node must have one or more TriggerSource nodes. It
+     defines the triggers that will be available for a particular device. -->
+<!ELEMENT TriggerInfo (Include*, TriggerSource+)>
+
+<!-- Each TriggerSource must have one or more TriggerCondition nodes. The
+     TriggerSource node has two attributes, id and name, which are both
+     required. The name will appear in the TriggerSource field of the data
+     returned by the TRIGGERINFO function.  The id can be any unique
+     identifier.  It is typically set to some value that is recognized by
+     the vendor's SDK. -->
+<!ELEMENT TriggerSource (TriggerCondition*, Include*)>
+<!ATTLIST TriggerSource id   CDATA #REQUIRED
+                        name CDATA #REQUIRED>
+			
+<!-- The TriggerCondition is a terminal node.  Both the name and id
+     attributes are required.  The name will appear in the TriggerCondition
+     field of the data returned by the TRIGGERINFO function.  The id can be
+     any unique identifier.  It is typically set to some value that is
+     recognized by the vendor's SDK. -->
+<!ELEMENT TriggerCondition EMPTY>
+<!ATTLIST TriggerCondition id   CDATA #REQUIRED
+                           name CDATA #REQUIRED>
+
+]>
+<!-- 
+JSH 10-15-2003 
+Copyright 2001-2012 The MathWorks, Inc.
+
+
+
+
+-->
+<ImageAcquisitionInfo>
+	<Help>
+		<AdaptorHelp property="Hue">Specify the image hue.
+		
+Hue specifies the main attribute of a color that distinguishes it from other 
+colors in the image.
+			<DeviceHelp device="Color Device">See also Saturation.</DeviceHelp>
+			<DeviceHelp device="Digital Hardware">See also Focus.</DeviceHelp>
+        </AdaptorHelp>
+        
+        <AdaptorHelp property="Saturation">Specify the color intensity of the image.
+
+Saturation is determined by the amount of gray in a color. A color with less 
+gray is considered more saturated; a color with more gray is considered less 
+saturated.
+			<SeeAlso>Hue.</SeeAlso>
+        </AdaptorHelp>
+        
+        <AdaptorHelp property="Brightness">Specify the black level of the image.
+        
+Brightness describes the difference in intensity of light reflected from or 
+transmitted through an image.
+			<SeeAlso>Contrast, Sharpness.</SeeAlso>
+        </AdaptorHelp>
+        
+        <AdaptorHelp property="Contrast">Specify the image contrast.
+        
+Contrast specifies the tonal gradation between brightness and darkness of an image.
+			<SeeAlso>Brightness, Sharpness.</SeeAlso>
+        </AdaptorHelp>
+        
+        <AdaptorHelp property="Sharpness">Specify the image sharpness.
+
+Sharpness specifies the subjective impression of the amount of detailed 
+information provided in a picture image.
+			<SeeAlso>Brightness, Contrast.</SeeAlso>
+        </AdaptorHelp>
+        
+        <AdaptorHelp property="Focus">Specify the camera-to-subject distance.
+
+Focus is the process of adjusting the distance setting on a camera's lens 
+system to produce a sharp image.
+			<SeeAlso>Hue.</SeeAlso>
+        </AdaptorHelp>
+        
+		<AdaptorHelp property="FrameRate">Specify the device frame rate.
+
+FrameRate determines the rate at which frames are provided by the device. 
+The FrameRate value is measured in frames per second.
+		</AdaptorHelp>
+		
+		<AdaptorHelp property="SyncInput">Specify the video sync input.
+
+SyncInput determines which color band or external source to be used as the sync input.
+		</AdaptorHelp>
+
+		<AdaptorHelp property="ExperimentSetup">Specify the experiment setup.
+
+ExperimentSetup specifies a detailed experiment description.
+		</AdaptorHelp>
+		<AdaptorHelp property="TimestampString">Returns the current time as a string.
+
+TimestampString returns the current time as a string.  The resolution is one
+second and the format is that used by the standard C library ctime function.
+		</AdaptorHelp>
+		<AdaptorHelp property="TimestampInteger">Returns the current time as an integer.
+
+TimestampInteger returns the current time as an integer.  The value corresponds
+to the output of the standard C library time function.
+		</AdaptorHelp>
+	</Help>
+	
+	<Device name="Color Device">
+		<Property optional="on" constraint="enum" default="30" deviceSpecific="true" 
+		 name="FrameRate" readOnly="whileRunning" type="string">
+			<EnumConstraintValue id="1" name="30"/>
+            <EnumConstraintValue id="2" name="15"/>
+            <EnumConstraintValue id="3" name="7.5"/>
+            <EnumConstraintValue id="4" name="3.75"/>
+            <EnumConstraintValue id="5" name="1.75"/>
+        </Property>
+	</Device>	
+	
+    <Device name="Monochrome Device">
+		<Property optional="on" constraint="enum" default="30" deviceSpecific="true" 
+		 name="FrameRate" readOnly="whileRunning" type="string">
+			<EnumConstraintValue id="1" name="30"/>
+            <EnumConstraintValue id="2" name="15"/>
+            <EnumConstraintValue id="3" name="7.5"/>
+            <EnumConstraintValue id="4" name="3.75"/>
+            <EnumConstraintValue id="5" name="1.75"/>
+        </Property>
+		       
+		<Property optional="on" constraint="bounded" default="128" deviceSpecific="true" max="255" min="0" 
+		 name="Brightness" readOnly="whileRunning" type="int"/>
+		
+        <Property optional="on" constraint="bounded" default="128" deviceSpecific="true" max="255" min="0" 
+         name="Contrast" readOnly="whileRunning" type="int"/>
+        
+       	<Property optional="on" constraint="bounded" default=".5" deviceSpecific="true" max="1.0" min="0" 
+       	 name="Sharpness" readOnly="whileRunning" type="double"/>
+	</Device>
+
+	<Device name="Digital Hardware">	
+	    <Section name="digInput">
+      		<Property constraint="enum" default="30" deviceSpecific="true" 
+      		name="FrameRate" readOnly="whileRunning" type="string">
+				<EnumConstraintValue id="1" name="30"/>
+				<EnumConstraintValue id="2" name="15"/>
+				<EnumConstraintValue id="3" name="7.5"/>
+				<EnumConstraintValue id="4" name="3.75"/>
+				<EnumConstraintValue id="5" name="1.75"/>
+			</Property>
+	    
+            <Property constraint="bounded" default="128" deviceSpecific="true" max="255" min="0"
+             name="Hue" readOnly="whileRunning" type="int"/>
+             
+            <Property constraint="bounded" default="128" deviceSpecific="true" max="255" min="0"
+             name="Focus" readOnly="whileRunning" type="int"/>
+            
+        </Section>   
+		<TriggerInfo>
+			<TriggerSource id="1" name="optoTrigger">
+				<TriggerCondition id="0" name="risingEdge"/>
+				<TriggerCondition id="1" name="fallingEdge"/>
+			</TriggerSource>
+            
+			<TriggerSource id="2" name="digitalTrigger">
+             	<TriggerCondition id="0" name="risingEdge"/>
+				<TriggerCondition id="1" name="fallingEdge"/>
+			</TriggerSource>
+            
+			<TriggerSource id="3" name="extTrigger">
+				<TriggerCondition id="0" name="risingEdge"/>
+				<TriggerCondition id="1" name="fallingEdge"/>
+			</TriggerSource>
+		</TriggerInfo>
+	</Device>
+</ImageAcquisitionInfo>

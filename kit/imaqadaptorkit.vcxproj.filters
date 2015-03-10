@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Derivable Classes">
+      <UniqueIdentifier>{19aa7260-443d-494f-ba24-c27b8fff232e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces &amp; Tools">
+      <UniqueIdentifier>{0bbf547d-3d6c-408a-8e38-e5d94a0415d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces &amp; Tools\Hardware &amp; Src Information">
+      <UniqueIdentifier>{6b7e1f6e-d7b2-462d-9f28-62ae7d64d95b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces &amp; Tools\Property Interfaces">
+      <UniqueIdentifier>{44566b68-210a-4c3e-b3a1-8b76ec42a8a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces &amp; Tools\Trigger Interfaces">
+      <UniqueIdentifier>{60563c3f-7648-4d00-8770-f12e49604a57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces &amp; Tools\Threading">
+      <UniqueIdentifier>{c4165adf-57b9-4ca0-9d03-9ebf98b03727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces &amp; Tools\Misc">
+      <UniqueIdentifier>{d1bfcea6-6555-471d-97db-78f673391e18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces &amp; Tools\Frames">
+      <UniqueIdentifier>{1e6723da-3c80-414f-af86-7a13fb082953}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\IAdaptor.h">
+      <Filter>Derivable Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IPropCustomGetFcn.h">
+      <Filter>Derivable Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IPropPostSetListener.h">
+      <Filter>Derivable Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IEngine.h">
+      <Filter>Interfaces &amp; Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imaqfcnexports.h">
+      <Filter>Interfaces &amp; Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IDeviceFormat.h">
+      <Filter>Interfaces &amp; Tools\Hardware &amp; Src Information</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IDeviceInfo.h">
+      <Filter>Interfaces &amp; Tools\Hardware &amp; Src Information</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IHardwareInfo.h">
+      <Filter>Interfaces &amp; Tools\Hardware &amp; Src Information</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IVideoSourceInfo.h">
+      <Filter>Interfaces &amp; Tools\Hardware &amp; Src Information</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IPropContainer.h">
+      <Filter>Interfaces &amp; Tools\Property Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IPropFactory.h">
+      <Filter>Interfaces &amp; Tools\Property Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IPropInfo.h">
+      <Filter>Interfaces &amp; Tools\Property Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ITriggerInfo.h">
+      <Filter>Interfaces &amp; Tools\Trigger Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ITriggerStatus.h">
+      <Filter>Interfaces &amp; Tools\Trigger Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IAutoCriticalSection.h">
+      <Filter>Interfaces &amp; Tools\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ICriticalSection.h">
+      <Filter>Interfaces &amp; Tools\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IAdaptorManager.h">
+      <Filter>Interfaces &amp; Tools\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imaqexportdef.h">
+      <Filter>Interfaces &amp; Tools\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IMAQInterface.h">
+      <Filter>Interfaces &amp; Tools\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mainhtml.h">
+      <Filter>Interfaces &amp; Tools\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdaptorFrameTypes.h">
+      <Filter>Interfaces &amp; Tools\Frames</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IAdaptorFrame.h">
+      <Filter>Interfaces &amp; Tools\Frames</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mwadaptorimaq.h" />
+  </ItemGroup>
+</Project>
